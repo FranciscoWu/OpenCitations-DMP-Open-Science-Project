@@ -1,0 +1,276 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OpenCitations Data Management Plan</title><style>
+        /*all page basic colors and other settings*/
+        :root {
+            --bg: #eef2f3;
+            --paper: #ffffff;
+            --text: #27343c;
+            --muted: #6d7880;
+            --line: #e2e7ea;
+            --blue: #466b80;
+            --soft: #f8fafb;
+            --highlight: #fff4bf;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font: 16px/1.75 Arial, sans-serif;
+        }
+
+        a {
+            color: var(--blue);
+            overflow-wrap: anywhere;
+        }
+
+        /*navigation bar*/
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 270px;
+            height: 100vh;
+            padding: 28px 20px;
+            overflow: auto;
+            background: #f8fafb;
+            border-right: 1px solid var(--line);
+        }
+
+        .sidebar strong {
+            display: block;
+            margin-bottom: 22px;
+            font-size: 17px;
+            line-height: 1.4;
+        }
+
+        .sidebar a {
+            display: block;
+            margin: 2px 0;
+            padding: 8px 10px;
+            border-radius: 6px;
+            color: #586771;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background: #edf2f4;
+            color: #294d5c;
+        }
+
+        .nav-title {
+            margin: 16px 10px 5px;
+            font-weight: bold;
+            color: var(--text);
+        }
+
+        .sidebar .description-link {
+            padding-left: 22px;
+            font-size: 13px;
+        }
+
+        .sidebar a.active {
+            padding-left: 7px;
+            background: #e4eef2;
+            border-left: 3px solid var(--blue);
+            color: #244d5f;
+            font-weight: bold;
+        }
+
+        /*content*/
+        .content {
+            margin-left: 270px;
+            padding: 34px 40px 80px;
+        }
+
+        .chapter {
+            max-width: 880px;
+            margin: 0 auto 24px;
+            padding: 42px 46px;
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
+            scroll-margin-top: 20px;
+        }
+
+        h1, h2, h3 {
+            line-height: 1.3;
+        }
+
+        h1 {
+            margin: 0 0 26px;
+            font-size: 38px;
+        }
+
+        h2 {
+            margin: 0 0 24px;
+            font-size: 28px;
+        }
+
+        h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+
+        p {
+            margin: 0 0 14px;
+        }
+
+        .lead {
+            color: #37464e;
+        }
+
+        /*Overview*/
+        .metadata {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin: 22px 0 32px;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .metadata > div {
+            padding: 12px;
+        }
+
+        .metadata > div > div {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .metadata b,
+        .detail b,
+        .item > b {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        /*Sections*/
+        .summary {
+            margin: 18px 0 28px;
+            padding: 15px 18px;
+            background: var(--soft);
+            border-left: 2px solid #a8bac2;
+        }
+
+        .field {
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid var(--line);
+        }
+
+        .detail {
+            margin: 9px 0;
+            padding: 5px 0;
+        }
+
+        .detail p {
+            margin: 3px 0;
+        }
+
+        /*Short values*/
+        .items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .item {
+            min-width: 0;
+            padding: 12px;
+            background: #fafbfc;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+        }
+
+        .item .detail {
+            margin: 2px 0;
+            padding: 0;
+            border: 0;
+            background: transparent;
+        }
+
+        /*Contributors*/
+        .people {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin: 16px 0 26px;
+        }
+
+        .person {
+            padding: 14px 16px;
+            background: #fafbfc;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .person p {
+            margin: 3px 0;
+            color: #56636c;
+        }
+
+
+        .person .detail {
+            margin: 4px 0;
+            padding: 0;
+            border: 0;
+            background: transparent;
+        }
+
+        .person .detail > b {
+            margin-bottom: 2px;
+        }
+
+        /*Costs and Resources*/
+        .resource {
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        /*Reading highliter*/
+        .chapter p {
+            border-radius: 4px;
+            transition: background-color .12s ease, box-shadow .12s ease;
+        }
+
+        .chapter p:hover {
+            background: var(--highlight);
+            box-shadow: 0 0 0 4px var(--highlight);
+        }
+
+        /*Mobile*/
+        @media (max-width: 800px) {
+            .sidebar {
+                position: static;
+                width: auto;
+                height: auto;
+            }
+
+            .content {
+                margin: 0;
+                padding: 20px;
+            }
+
+            .chapter {
+                padding: 30px 24px;
+            }
+
+            .metadata,
+            .people,
+            .items {
+                grid-template-columns: 1fr;
+            }
+        }
+        </style></head><body><aside class="sidebar"><strong>OpenCitations Data Management Plan</strong><nav><a href="#overview">Overview</a><a href="#contributors">Contributors</a><a href="#costs">Costs and Resources</a><div class="nav-title">Descriptions</div><a class="description-link" href="#item-1">1.OpenCitations Data Model (OCDM)</a><a class="description-link" href="#item-2">2.oc-index (OpenCitations Index software)</a><a class="description-link" href="#item-3">3.oc_ocdm (software for handling OCDM-compliant data)</a><a class="description-link" href="#item-4">4.OpenCitations Index</a><a class="description-link" href="#item-5">5.OpenCitations Meta</a><a class="description-link" href="#item-6">6.oc_meta (OpenCitations Meta software)</a></nav></aside><main class="content"><section class="chapter" id="overview"><h1>OpenCitations Data Management Plan</h1><div class="metadata"><div><b>Project</b><p>Open Science Course</p></div><div><b>Contact</b><p>Yifan Wu</p></div><div><b>Email</b><p>yifan.wu2@studio.unibo.it</p></div><div><b>Created</b><p>2026-09-19</p></div><div><b>Updated</b><p>2026-10-07</p></div><div><b>Language</b><p>eng</p></div></div><h2>DMP Description</h2><div class="lead"><p>This Data Management Plan describes the management of the main data, data models, and software components of the OpenCitations infrastructure.<br>It covers the OpenCitations Data Model(OCDM), OpenCitations Index, OpenCitations Meta, and the software used to ingest, process, validate, and manage data compliant with the OpenCitations Data Model.<br><br>The purpose of the plan is to document how these research objects are created, processed, stored, documented, accessed, shared, preserved, and reused, including their formats, identifiers, provenance, licensing, and data quality procedures.<br><br>The DMP is intended to provide a structured and machine-actionable description of the data management practices adopted within OpenCitations.<br></p></div><div class="field"><h3>DMP ID</h3><div class="detail"><b>Identifier</b><p>84eff3c4-1d9b-4c02-b776-7eecaab6ecbe</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="field"><h3>Ethical Issues</h3><p>unknown</p></div><div class="field"><h3>Project Description</h3><p>Open Science Course</p></div><div class="field"><h3>Funding</h3><div><div class="detail"><b>Funder ID</b><div class="detail"><b>Identifier</b><p>UNIBO</p></div><div class="detail"><b>Type</b><p>fundref</p></div></div><div class="detail"><b>Grant ID</b><div class="detail"><b>Identifier</b><p>Open Science Course</p></div><div class="detail"><b>Type</b><p>other</p></div></div></div></div></section><section id="contributors" class="chapter"><h2>Contributors</h2><div class="people"><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0003-0530-4305</p></div></div><div class="detail"><b>Name</b><p>Peroni, Silvio</p></div><div class="detail"><b>Email</b><p>silvio.peroni@unibo.it</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0001-5506-523X</p></div></div><div class="detail"><b>Name</b><p>Shotton, David</p></div><div class="detail"><b>Email</b><p>david.shotton@opencitations.net</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0002-1113-7550</p></div></div><div class="detail"><b>Name</b><p>Daquino, Marilena</p></div><div class="detail"><b>Email</b><p>marilena.daquino2@unibo.it</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0002-9806-084X</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Name</b><p>Giovanni Colavizza (0000-0002-9806-084X)</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0002-4627-5371</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Name</b><p>Behnam Ghavimi (0000-0002-4627-5371)</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0001-8590-9827</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Name</b><p>Anne Lauscher (0000-0001-8590-9827)</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0002-6656-1658</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Name</b><p>Philipp Mayr (0000-0002-6656-1658)</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0002-7406-6286</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Name</b><p>Matteo Romanello (0000-0002-7406-6286)</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0002-6485-9434</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Name</b><p>Philipp Zumstein (0000-0002-6485-9434)</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0001-5366-5194</p></div></div><div class="detail"><b>Name</b><p>Heibi, Ivan</p></div><div class="detail"><b>Email</b><p>ivan.heibi2@unibo.it</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0002-8420-0696</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Name</b><p>Arcangelo Massari (orcid:0000-0002-8420-0696)</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0009-0008-1466-7742</p></div></div><div class="detail"><b>Name</b><p>Soricetti, Marta</p></div><div class="detail"><b>Email</b><p>marta.soricetti2@unibo.it</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0009-0003-7161-9310</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Name</b><p>Elia Rizzetto (0009-0003-7161-9310)</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0001-5486-7070</p></div></div><div class="detail"><b>Name</b><p>Moretti, Arianna</p></div><div class="detail"><b>Email</b><p>arianna.moretti4@unibo.it</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>0000-0002-7382-0187</p></div></div><div class="detail"><b>Name</b><p>Mariani, Fabio</p></div><div class="detail"><b>Email</b><p>fabio.mariani@leuphana.de</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>simone-persiani</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Name</b><p>Simone Persiani</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>c1c0a51f-6a6b-4c4b-812f-3a3951a0da41</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Email</b><p>silvio.peroni@unibo.it</p></div><div class="detail"><b>Name</b><p>Silvio Peroni</p></div></div><div class="person"><div class="detail"><b>Contributor ID</b><div class="detail"><b>Identifier</b><p>4bedff41-d0fa-4427-9333-e82d8fe2a1d6</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="detail"><b>Email</b><p>yifan.wu2@studio.unibo.it</p></div><div class="detail"><b>Name</b><p>Yifan Wu</p></div></div><div class="person"><div class="detail"><b>Email</b><p>simone.persiani2@studio.unibo.it</p></div><div class="detail"><b>Name</b><p>Persiani, Simone</p></div></div></div></section><section id="costs" class="chapter"><h2>Costs and Resources</h2><div class="resource"><div class="detail"><b>Description</b><p>Resources supporting the FAIR management of OCDM include its public specification and documentation, version control through the OpenCitations GitHub repository, and versioned releases deposited in Figshare.</p></div></div><div class="resource"><div class="detail"><b>Description</b><p>Resources supporting the management and reuse of the Index ingestion software include the public OpenCitations GitHub repository, version control, source code, configuration files and tests</p></div></div><div class="resource"><div class="detail"><b>Description</b><p>Resources supporting the FAIR management of oc_ocdm include its public GitHub repository, documentation, version control, automated tests, dependency management and published software packages.</p></div></div><div class="resource"><div class="detail"><b>Description</b><p>Resources supporting FAIR management of the OpenCitations Index include the ingestion workflow, provenance and change-tracking information, public data dumps, REST APIs and the SPARQL endpoint.</p></div></div><div class="resource"><div class="detail"><b>Description</b><p>Resources supporting FAIR management of OpenCitations Meta include its automated curation and RDF-conversion workflow, provenance and change tracking, public dataset distributions, APIs and the SPARQL endpoint.</p></div></div><div class="resource"><div class="detail"><b>Description</b><p>Resources supporting the management and reuse of oc_meta include its public GitHub repository, version control, source code, tests, software releases and the documented automated curation and RDF-generation workflow.</p></div></div></section><section class="chapter"><h2>Descriptions</h2></section><section id="item-1" class="chapter"><h3>OpenCitations Data Model (OCDM)</h3><div class="field"><h3>Description</h3><p>The OpenCitations Data Model is an RDF-based model for representing bibliographic entities, citations, identifiers, agents, publication venues, and provenance. It reuses the SPAR Ontologies, PROV-O, and other established vocabularies to provide a consistent semantic representation across OpenCitations datasets and external projects.</p></div><div class="field"><h3>Data Quality Assurance</h3><div><p>OCDM reuses established ontologies and follows a documented ontology development and evaluation process. Extensions use SAMOD with motivating scenarios, competency questions, and a glossary of terms. OCO has been evaluated against JATS/XML data, compared with other bibliographic data models, and tested against requirements from early adopters. New use cases are used to identify and address gaps in the model.</p></div></div><div class="field"><h3>Dataset ID</h3><div class="detail"><b>Identifier</b><p>10.6084/m9.figshare.3443876.v7</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="field"><h3>Distribution</h3><div><div class="detail"><b>Format</b><div><p>JSON-LD</p></div></div></div><div><div class="detail"><b>Format</b><div><p>CSV</p></div></div></div><div><div class="detail"><b>Host</b><div class="detail"><b>Title</b><p>Figshare</p></div><div class="detail"><b>URL</b><p><a href="https://doi.org/10.6084/m9.figshare.3443876" target="_blank">https://doi.org/10.6084/m9.figshare.3443876</a></p></div></div></div></div><div class="field"><h3>Keywords</h3><div><p>OpenCitations, OpenCitations Data Model, OCDM, bibliographic metadata, citation data, RDF, Semantic Web, SPAR Ontologies, provenance</p></div></div><div class="field"><h3>Language</h3><p>eng</p></div><div class="field"><h3>Metadata</h3><div><div class="detail"><b>Description</b><p>The Figshare record includes structured metadata for the title, creators, description, keywords, license, DOI, publication date, and version. Figshare exposes these metadata in machine-readable formats through its API and metadata export services.</p></div></div></div><div class="field"><h3>Personal Data</h3><p>unknown</p></div><div class="field"><h3>Preservation Statement</h3><p>The OCDM specification, ontology documentation, examples, development and evaluation materials, and previous published versions will be preserved. Earlier versions document changes to the model and support the interpretation of data created under older versions.</p></div><div class="field"><h3>Sensitive Data</h3><p>unknown</p></div><div class="field"><h3>Type</h3><p>Citation data</p></div></section><section id="item-2" class="chapter"><h3>oc-index (OpenCitations Index software)</h3><div class="field"><h3>Description</h3><p>oc-index is a Python package for producing citation data for the OpenCitations Index. It resolves external identifiers in citation tables to OpenCitations Meta Identifiers (OMIDs), converts citation links into OMID-to-OMID relationships, and generates citation entities compliant with the OpenCitations Data Model. The software is open source and released under the ISC License.</p></div><div class="field"><h3>Data Quality Assurance</h3><div><p>Development is managed with Git and supported by an automated test suite and GitHub workflows. Static type checking is performed with Pyright, and code changes can be reviewed through GitHub pull requests. Data produced by the ingestion workflow is also subject to validation and post-ingestion monitoring.</p></div></div><div class="field"><h3>Dataset ID</h3><div class="detail"><b>Identifier</b><p>swh:1:snp:edecc78aff97644d83e48f7373710554a2f55721</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="field"><h3>Distribution</h3><div><div class="detail"><b>Format</b><div><p>Python source code (.py)</p></div></div></div><div><div class="detail"><b>Format</b><div><p>TOML project configuration (.toml)</p></div></div></div><div><div class="detail"><b>Format</b><div><p>INI configuration files (.ini)</p></div></div></div><div><div class="detail"><b>Format</b><div><p>CSV lookup and configuration files (.csv)</p></div></div></div><div><div class="detail"><b>Host</b><div class="detail"><b>Title</b><p>Software Heritage Archive</p></div><div class="detail"><b>URL</b><p><a href="https://archive.softwareheritage.org/" target="_blank">https://archive.softwareheritage.org/</a></p></div></div></div></div><div class="field"><h3>Keywords</h3><div><p>OpenCitations, OpenCitations Index, citation ingestion, research software, Python, OMID, OCI, RDF, OpenCitations Data Model, Linked Open Data</p></div></div><div class="field"><h3>Language</h3><p>eng</p></div><div class="field"><h3>Metadata</h3><div><div class="detail"><b>Description</b><p>The repository includes structured software metadata for the name, version, description, license, author contact, Python requirements, dependencies, and command-line entry points in pyproject.toml. GitHub records the development history, while Software Heritage records the archived software snapshot.</p></div></div></div><div class="field"><h3>Personal Data</h3><p>unknown</p></div><div class="field"><h3>Preservation Statement</h3><p>Source code, version history, configuration files, documentation, tests, and released versions will be preserved. Earlier versions support the reproduction of historical ingestion workflows and OpenCitations Index releases.&amp;#160;</p></div><div class="field"><h3>Sensitive Data</h3><p>unknown</p></div><div class="field"><h3>Type</h3><p>Application software for citation data ingestion and transformation</p></div></section><section id="item-3" class="chapter"><h3>oc_ocdm (software for handling OCDM-compliant data)</h3><div class="field"><h3>Description</h3><p>oc_ocdm is an open-source Python library for creating and manipulating RDF data compliant with the OpenCitations Data Model. It provides object-oriented interfaces for bibliographic resources, agents, identifiers, provenance, and dataset metadata, with support for validation, change tracking, serialization, and synchronization with RDF stores. The software is released under the ISC License.</p></div><div class="field"><h3>Data Quality Assurance</h3><div><p>oc_ocdm uses Test Driven Development, automated tests, benchmarks, and GitHub workflows to check software changes. The library also validates entity operations against OCDM constraints. Change tracking and provenance record modifications to RDF entities, while versioned releases and the changelog document changes to the software.</p></div></div><div class="field"><h3>Dataset ID</h3><div class="detail"><b>Identifier</b><p>10.5281/zenodo.5770646</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="field"><h3>Distribution</h3><div><div class="detail"><b>Format</b><div><p>Python source code (.py)</p></div></div></div><div><div class="detail"><b>Format</b><div><p>TOML project configuration (.toml)</p></div></div></div><div><div class="detail"><b>Format</b><div><p>Markdown documentation (.md)</p></div></div></div><div><div class="detail"><b>Format</b><div><p>Jupyter notebooks (.ipynb)</p></div></div></div><div><div class="detail"><b>Host</b><div class="detail"><b>Title</b><p>Zenodo</p></div><div class="detail"><b>URL</b><p><a href="https://zenodo.org" target="_blank">https://zenodo.org</a></p></div></div></div></div><div class="field"><h3>Keywords</h3><div><p>OpenCitations, oc_ocdm, OpenCitations Data Model, OCDM, Python, RDF, SPAR Ontologies, provenance, Semantic Web, object mapping</p></div></div><div class="field"><h3>Language</h3><p>eng</p></div><div class="field"><h3>Metadata</h3><div><div class="detail"><b>Description</b><p>oc_ocdm includes structured metadata for its name, creators, version, license, Python requirements, repository, release information, and citation information. The source repository provides these through files including pyproject.toml, CITATION.cff, CHANGELOG.md, and README.md, while Zenodo and PyPI expose metadata for published releases.</p></div></div></div><div class="field"><h3>Personal Data</h3><p>unknown</p></div><div class="field"><h3>Preservation Statement</h3><p>Source code, released packages, version history, tests, documentation, configuration files, and software metadata will be preserved. Earlier releases are retained because OpenCitations applications may depend on specific versions and because they support reproducibility.</p></div><div class="field"><h3>Sensitive Data</h3><p>unknown</p></div><div class="field"><h3>Type</h3><p>Python software library for RDF object mapping, data manipulation, and provenance management</p></div></section><section id="item-4" class="chapter"><h3>OpenCitations Index</h3><div class="field"><h3>Description</h3><p>The OpenCitations Index is an open collection of citation links integrated from multiple scholarly data sources. Citations are normalised as OMID-to-OMID relationships, deduplicated, and represented according to the OpenCitations Data Model. Each citation is identified by an Open Citation Identifier (OCI) and can include metadata, provenance, and change-tracking information.</p></div><div class="field"><h3>Data Quality Assurance</h3><div><p>The ingestion workflow normalises external identifiers and uses OpenCitations Meta to map identifiers referring to the same bibliographic resource. These mappings allow duplicate citation links from different sources to be identified and removed. Provenance and change-tracking records support traceability, while validation is applied before publication.</p></div></div><div class="field"><h3>Dataset ID</h3><div class="detail"><b>Identifier</b><p>10.6084/m9.figshare.24356626</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="field"><h3>Distribution</h3><div><div class="detail"><b>Format</b><div><p>CSV</p></div></div></div><div><div class="detail"><b>Format</b><div><p>N-Triples</p></div></div></div><div><div class="detail"><b>Format</b><div><p>Scholix</p></div></div></div><div><div class="detail"><b>Host</b><div class="detail"><b>Title</b><p>Figshare</p></div><div class="detail"><b>URL</b><p><a href="https://figshare.com" target="_blank">https://figshare.com</a></p></div></div></div></div><div class="field"><h3>Keywords</h3><div><p>OpenCitations, OpenCitations Index, citations, bibliographic metadata, RDF, Linked Open Data, provenance, OCI, OMID</p></div></div><div class="field"><h3>Language</h3><p>eng</p></div><div class="field"><h3>Metadata</h3><div><div class="detail"><b>Description</b><p>Index citations include identifiers for the citing and cited resources, citation metadata where available, and provenance records describing their source and history. Figshare records provide descriptive metadata and persistent DOIs for the published distributions.</p></div></div></div><div class="field"><h3>Personal Data</h3><p>unknown</p></div><div class="field"><h3>Preservation Statement</h3><p>Citation data, provenance, change-tracking information, published distributions, and previous dataset dumps will be preserved. Earlier dumps record the state of the Index at different points in time and support reproducibility.</p></div><div class="field"><h3>Sensitive Data</h3><p>unknown</p></div><div class="field"><h3>Type</h3><p>Citation data</p></div></section><section id="item-5" class="chapter"><h3>OpenCitations Meta</h3><div class="field"><h3>Description</h3><p>OpenCitations Meta is an open bibliographic metadata database for scholarly resources involved in citations indexed by OpenCitations. Records are automatically curated and deduplicated using persistent identifiers, and entities are assigned OpenCitations Meta Identifiers (OMIDs). Curated metadata are represented as OCDM-compliant RDF, with provenance and change-tracking records documenting the source and history of each entity.</p></div><div class="field"><h3>Data Quality Assurance</h3><div><p>Before RDF conversion, the Curator performs identifier-based deduplication, enrichment, normalization, and error correction. Entities are merged only when shared identifiers establish that they represent the same resource. Provenance and change-tracking records preserve the history of each entity. META-CSV data can be validated before ingestion, and automated monitoring queries can detect database-level errors after ingestion.</p></div></div><div class="field"><h3>Dataset ID</h3><div class="detail"><b>Identifier</b><p>10.5281/zenodo.20965426</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="field"><h3>Distribution</h3><div><div class="detail"><b>Format</b><div><p>CSV</p></div></div></div><div><div class="detail"><b>Format</b><div><p>JSON-LD (RDF)</p></div></div></div><div><div class="detail"><b>Host</b><div class="detail"><b>Title</b><p>Zenodo</p></div><div class="detail"><b>URL</b><p><a href="https://zenodo.org" target="_blank">https://zenodo.org</a></p></div></div></div><div><div class="detail"><b>Host</b><div class="detail"><b>Title</b><p>Figshare</p></div><div class="detail"><b>URL</b><p><a href="https://figshare.com" target="_blank">https://figshare.com</a></p></div></div></div></div><div class="field"><h3>Keywords</h3><div><p>OpenCitations, OpenCitations Meta, bibliographic metadata, OMID, RDF, Linked Open Data, provenance, change tracking, data curation</p></div></div><div class="field"><h3>Language</h3><p>eng</p></div><div class="field"><h3>Metadata</h3><div><div class="detail"><b>Description</b><p>Published distributions include repository metadata for the title, creators, description, publication date, license, version, and persistent identifiers. Within OpenCitations Meta, bibliographic records contain structured metadata and identifiers, while provenance records document their source and modification history.</p></div></div></div><div class="field"><h3>Personal Data</h3><p>unknown</p></div><div class="field"><h3>Preservation Statement</h3><p>Curated bibliographic metadata, OMID mappings, provenance records, change-tracking information, published distributions, and previous releases will be preserved. Earlier releases document the state of the database at different points in time and support reproducibility and historical analysis.</p></div><div class="field"><h3>Sensitive Data</h3><p>unknown</p></div><div class="field"><h3>Type</h3><p>Bibliographic metadata</p></div></section><section id="item-6" class="chapter"><h3>oc_meta (OpenCitations Meta software)</h3><div class="field"><h3>Description</h3><p>oc_meta is open-source Python software for managing bibliographic metadata in OpenCitations Meta. It processes structured CSV metadata, performs automated curation, and generates RDF compliant with the OpenCitations Data Model. The software also records provenance and change tracking for bibliographic entities and is released under the ISC License.</p></div><div class="field"><h3>Data Quality Assurance</h3><div><p>oc_meta is maintained with Git and an automated test suite integrated with GitHub workflows. Development tools include pytest and coverage for testing, Pyright for static type checking, and Ruff for code analysis. Software changes are documented through versioned releases and the project changelog.</p></div></div><div class="field"><h3>Dataset ID</h3><div class="detail"><b>Identifier</b><p>10.5281/zenodo.20965287</p></div><div class="detail"><b>Type</b><p>other</p></div></div><div class="field"><h3>Distribution</h3><div><div class="detail"><b>Format</b><div><p>Python source code (.py)</p></div></div></div><div><div class="detail"><b>Format</b><div><p>YAML configuration files (.yaml)</p></div></div></div><div><div class="detail"><b>Format</b><div><p>TOML project configuration (.toml)</p></div></div></div><div><div class="detail"><b>Format</b><div><p>CSV input and example files (.csv)</p></div></div></div><div><div class="detail"><b>Format</b><div><p>JSON configuration and metadata files (.json)</p></div></div></div><div><div class="detail"><b>Host</b><div class="detail"><b>Title</b><p>Zenodo</p></div></div></div></div><div class="field"><h3>Keywords</h3><div><p>OpenCitations, OpenCitations Meta, oc_meta, bibliographic metadata, Python, RDF, OMID, provenance, data curation, Semantic Web</p></div></div><div class="field"><h3>Language</h3><p>eng</p></div><div class="field"><h3>Metadata</h3><div><div class="detail"><b>Description</b><p>oc_meta includes structured metadata for its title, creators, version, description, license, repository, release date, dependencies, and citation information. The source repository provides software metadata through files including CITATION.cff, pyproject.toml, and CHANGELOG.md, while Zenodo provides metadata for archived releases.</p></div></div></div><div class="field"><h3>Personal Data</h3><p>unknown</p></div><div class="field"><h3>Preservation Statement</h3><p>Source code, released packages, version history, configuration files, documentation, tests, and software metadata will be preserved. Earlier releases are retained to support the reproducibility of previous OpenCitations Meta processing workflows.</p></div><div class="field"><h3>Sensitive Data</h3><p>unknown</p></div><div class="field"><h3>Type</h3><p>Application software for bibliographic metadata ingestion, curation, and RDF generation</p></div></section></main></body></html>
