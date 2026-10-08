@@ -12,7 +12,8 @@ The main goal of the project is to create a **Data Management Plan (DMP)** for O
 | 5. Use Python to convert the JSON into human-readable HTML |
 | 6. Generate and deploy the HTML through GitHub Pages       |
 
-
+HTML Page
+https://franciscowu.github.io/OpenCitations-DMP-Open-Science-Project/
 
 # Translator.py
 
